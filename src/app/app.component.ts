@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Pokemon } from './pokemon.model';
 import { PokemonBorderDirective } from './pokemon-border.directive';
 import { DatePipe } from '@angular/common';
@@ -13,8 +13,17 @@ import { PokemonService } from './pokemon.service';
   providers: [PokemonService],
 })
 export class AppComponent {
-  private readonly pokemonService = inject(PokemonService);
-  pokemons = signal(this.pokemonService.getPokemonList());
+  readonly pokemonService = inject(PokemonService);
+
+  readonly pokemons = signal(this.pokemonService.getPokemonList());
+  readonly searchTerm = signal('');
+  readonly pokemonListFiltered = computed(() => {
+    return this.pokemons().filter((pokemon) =>
+      pokemon.name
+        .toLowerCase()
+        .includes(this.searchTerm().trim().toLowerCase())
+    );
+  });
 
   size(pokemon: Pokemon) {
     if (pokemon.life <= 15) {
