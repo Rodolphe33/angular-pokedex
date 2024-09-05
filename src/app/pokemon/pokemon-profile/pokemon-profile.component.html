@@ -1,14 +1,8 @@
 <div class="container mt-5">
   <div class="card">
     <div class="row g-0">
-      <div
-        class="col-md-4 d-flex align-items-center justify-content-center bg-light"
-      >
-        <img
-          [src]="pokemon().picture"
-          class="img-fluid rounded-start"
-          [alt]="pokemon().name"
-        />
+      <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
+        <img [src]="pokemon().picture" class="img-fluid rounded-start" [alt]="pokemon().name" />
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -40,13 +34,10 @@
             </tbody>
           </table>
           <div class="d-flex justify-content-between mt-4">
-            <button
-              class="btn btn-link text-decoration-none text-warning"
-              routerLink="/pokemons"
-            >
+            <button class="btn btn-link text-decoration-none text-warning" routerLink="/pokemons">
               RETOUR
             </button>
-            <button class="btn btn-link text-decoration-none text-warning">
+            <button class="btn btn-link text-decoration-none text-warning" [routerLink]="['/pokemons/edit', pokemon().id]">
               ÉDITER
             </button>
             <button class="btn btn-link text-decoration-none text-warning">

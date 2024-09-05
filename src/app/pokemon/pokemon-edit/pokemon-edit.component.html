@@ -1,0 +1,77 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="row g-0">
+      <div class="col-md-4 d-flex align-items-center justify-content-center bg-ligth">
+        <img [src]="pokemon().picture" [alt]="pokemon().name" class="img-fluid rounded-start" />
+      </div>
+      <div class="col-md-8">
+        <form [formGroup]="form">
+          <div class="card-body">
+            <h2 class="card-title">{{ pokemon().name }}</h2>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th scope="row">Name</th>
+                  <td>
+                    <input type="text" class="form-control" placeholder="Nom de Pokémon" formControlName="name" />
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Point de vie</th>
+                  <td>
+                    <div class="input-group">
+                      <button type="button" class="btn btn-outline-secondary" disabled>-</button>
+                      <input type="number" class="form-control text-center" formControlName="life" readonly />
+                      <button type="button" class="btn btn-outline-secondary" disabled>+</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Dégâts</th>
+                  <td>
+                    <div class="input-control">
+                      <button type="button" class="btn btn-outline-secondary" disabled>-</button>
+                      <input type="number" class="form-control text-center" formControlName="damage" readonly />
+                      <button type="button" class="btn btn-outline-secondary" disabled>+</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Types</th>
+                  <td>
+                    @for(type of pokemonTypeList.controls; track type; let index = $index) {
+                    <button type="button" class="btn btn-secondary btn-sm rounded-pill m-1"
+                      (click)="pokemonTypeList.removeAt(index)">
+                      {{ type.value }} <span class="badge">x</span>
+                    </button>
+                    }
+                    <div class="row mt-3">
+                      @for(type of pokemonService.getPokemonTypeList(); track type) {
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input #checkbox
+                            class="form-check-input" type="checkbox"
+                            [id]="type"
+                            [value]="type"
+                            (change)="onPokemonTypeChange(type, checkbox.checked)"
+                            [checked]="isPokemonTypeSelected(type)" />
+                          <label [for]="type" class="form-check-label">{{ type }}</label>
+                        </div>
+                      </div>
+                      }
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-between mt-4">
+              <button class="btn btn-link text-decoration-none text-warning"
+                [routerLink]="['/pokemons', pokemon().id]">RETOUR</button>
+              <button type="submit" class="btn btn-link text-warning">SAUVEGARDET LES CHANGEMENTS</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
