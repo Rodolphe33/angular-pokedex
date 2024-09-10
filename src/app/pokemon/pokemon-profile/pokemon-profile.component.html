@@ -21,9 +21,11 @@
                 <th scope="row">Types</th>
                 <td>
                   @for(type of pokemon().types; track type) {
-                  <span class="badge rounded-pill bg-secondary me-1">{{
-                    type
-                  }}</span>
+                  <span class="badge rounded-pill bg-secondary me-1"
+                        [style.backgroundColor]="type ? getPokemonColor(type) : ''"
+                        [style.color]="type === 'Electrik' ? 'Black' : 'white'">
+                    {{ type }}
+                  </span>
                   }
                 </td>
               </tr>

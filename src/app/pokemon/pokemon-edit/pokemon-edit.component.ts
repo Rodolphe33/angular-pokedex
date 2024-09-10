@@ -7,7 +7,9 @@ import {
   FormControl,
   FormArray,
 } from '@angular/forms';
+
 import { PokemonService } from '../../pokemon.service';
+import { getPokemonColor } from '../../pokemon.model';
 
 @Component({
   selector: 'app-pokemon-edit',
@@ -29,14 +31,14 @@ export class PokemonEditComponent {
     name: new FormControl(this.pokemon().name),
     life: new FormControl(this.pokemon().life),
     damage: new FormControl(this.pokemon().damage),
-    type: new FormArray(
+    types: new FormArray(
       this.pokemon().types.map((type) => new FormControl(type))
     ),
   });
 
   // liste des Pokémon sélectionnés par utilisateur
   get pokemonTypeList(): FormArray {
-    return this.form.get('type') as FormArray;
+    return this.form.get('types') as FormArray;
   }
 
   // Renvoie si le type donné est déjà sélectionné par l'utilisateur ou non
@@ -57,5 +59,13 @@ export class PokemonEditComponent {
         .indexOf(type);
       this.pokemonTypeList.removeAt(index);
     }
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+  }
+
+  getPokemonColor(type: string) {
+    return getPokemonColor(type);
   }
 }

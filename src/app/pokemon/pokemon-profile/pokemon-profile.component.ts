@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PokemonService } from '../../pokemon.service';
 import { DatePipe } from '@angular/common';
+import { getPokemonColor } from '../../pokemon.model';
 
 @Component({
   selector: 'app-pokemon-profile',
@@ -17,4 +18,8 @@ export class PokemonProfileComponent {
   readonly pokemon = signal(
     this.pokemonService.getPokemonById(this.pokemonId)
   ).asReadonly();
+
+  getPokemonColor(type: string) {
+    return getPokemonColor(type);
+  }
 }
