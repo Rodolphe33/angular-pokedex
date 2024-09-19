@@ -11,7 +11,13 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [DatePipe, PokemonBorderDirective, RouterLink],
   templateUrl: './pokemon-list.component.html',
-  styles: ``,
+  styles: [
+    `
+      .pokemon-card {
+        cursor: pointer;
+      }
+    `,
+  ],
 })
 export class PokemonListComponent {
   readonly pokemonService = inject(PokemonService);
@@ -36,11 +42,13 @@ export class PokemonListComponent {
     return 'Moyen';
   }
 
-  incrementLife(pokemon: Pokemon) {
-    pokemon.life = pokemon.life + 1;
-  }
+  /** Suppression des boutons
+  * incrementLife(pokemon: Pokemon) {
+  *   pokemon.life = pokemon.life + 1;
+  * }
 
-  decrementLife(pokemon: Pokemon) {
-    pokemon.life = pokemon.life - 1;
-  }
+  * decrementLife(pokemon: Pokemon) {
+  *   pokemon.life = pokemon.life - 1;
+  * }
+  */
 }
