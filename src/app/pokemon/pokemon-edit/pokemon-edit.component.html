@@ -13,16 +13,54 @@
                 <tr>
                   <th scope="row">Name</th>
                   <td>
-                    <input type="text" class="form-control" placeholder="Nom de Pokémon" formControlName="name" />
+                    <input type="text" class="form-control"
+                      placeholder="Nom de Pokémon"
+                      formControlName="name"
+                      [class.is-invalid]="pokemonName.invalid" />
+                      <!-- <div>{{ pokemonName.errors | json }}</div> -->
+                      @if(pokemonName.hasError('required')) {
+                        <div class="invalid-feedback">
+                          Veuillez renseigner ce champ.
+                        </div>
+                      }
+                      @if(pokemonName.hasError('minlength')) {
+                        <div class="invalid-feedback">
+                          Veuillez saisir un nom plus long.
+                          (Minimum : {{ pokemonName.getError("minlength").requiredLength }} caractères)
+                        </div>
+                      }
+                      @if(pokemonName.hasError('maxlength')) {
+                        <div class="invalid-feedback">
+                          Veuillez saisir un nom plus court. (Maximum :
+                          {{ pokemonName.getError("maxlength").requiredLength }} caractères)
+                        </div>
+                      }
+                      @if(pokemonName.hasError('pattern')) {
+                        <div class="invalid-feedback">
+                          Veuillez saisir uniquement des lettres.
+                        </div>
+                      }
                   </td>
                 </tr>
                 <tr>
                   <th scope="row">Point de vie</th>
                   <td>
                     <div class="input-group">
-                      <button type="button" class="btn btn-outline-secondary" disabled>-</button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        [disabled]="pokemonLife.value <= POKEMON_RULES().MIN_LIFE"
+                        (click)="decrementLife()">
+                        -
+                      </button>
                       <input type="number" class="form-control text-center" formControlName="life" readonly />
-                      <button type="button" class="btn btn-outline-secondary" disabled>+</button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        [disabled]="pokemonLife.value >= POKEMON_RULES().MAX_LIFE"
+                        (click)="incrementLife()">
+                        +
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -30,9 +68,21 @@
                   <th scope="row">Dégâts</th>
                   <td>
                     <div class="input-control">
-                      <button type="button" class="btn btn-outline-secondary" disabled>-</button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        [disabled]="pokemonDamage.value <= POKEMON_RULES().MIN_DAMAGE"
+                        (click)="decrementDamage()">
+                        -
+                      </button>
                       <input type="number" class="form-control text-center" formControlName="damage" readonly />
-                      <button type="button" class="btn btn-outline-secondary" disabled>+</button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        [disabled]="pokemonDamage.value >= POKEMON_RULES().MAX_DAMAGE"
+                        (click)="incrementDamage()">
+                        +
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -49,6 +99,17 @@
                       x
                       </span>
                     </button>
+                    }
+                    @if(pokemonTypeList.hasError('required')) {
+                    <p class="text-danger">
+                      Veuillez sélectionner au moins un type pour un Pokémon.
+                    </p>
+                    }
+                    @if(pokemonTypeList.hasError('maxlength')) {
+                    <p class="text-danger">
+                      Veuillez sélectionner au maximum
+                      {{ pokemonTypeList.getError("maxlength").requiredLength }} types pour un Pokémon.
+                    </p>
                     }
                     <div class="row mt-3">
                       @for(type of pokemonService.getPokemonTypeList(); track type) {
@@ -72,7 +133,13 @@
             <div class="d-flex justify-content-between mt-4">
               <button class="btn btn-link text-decoration-none text-warning"
                 [routerLink]="['/pokemons', pokemon().id]">RETOUR</button>
-              <button type="submit" class="btn btn-link text-warning">SAUVEGARDET LES CHANGEMENTS</button>
+              <button
+                type="submit" class="btn btn-link text-decoration-none"
+                [class.text-warning]="form.valid"
+                [class.text-secondary]="form.invalid"
+                [disabled]="form.invalid">
+                SAUVEGARDET LES CHANGEMENTS
+              </button>
             </div>
           </div>
         </form>

@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
@@ -6,15 +6,16 @@ import {
   FormGroup,
   FormControl,
   FormArray,
+  Validators,
 } from '@angular/forms';
 
 import { PokemonService } from '../../pokemon.service';
-import { getPokemonColor } from '../../pokemon.model';
+import { getPokemonColor, POKEMON_RULES } from '../../pokemon.model';
 
 @Component({
   selector: 'app-pokemon-edit',
   standalone: true,
-  imports: [DatePipe, RouterLink, ReactiveFormsModule],
+  imports: [DatePipe, RouterLink, ReactiveFormsModule, JsonPipe],
   templateUrl: './pokemon-edit.component.html',
   styles: ``,
 })
@@ -25,14 +26,21 @@ export class PokemonEditComponent {
   readonly pokemon = signal(
     this.pokemonService.getPokemonById(this.pokemonId)
   ).asReadonly();
+  readonly POKEMON_RULES = signal(POKEMON_RULES).asReadonly();
 
   // Formulaire de modification du Pokémon
   readonly form = new FormGroup({
-    name: new FormControl(this.pokemon().name),
+    name: new FormControl(this.pokemon().name, [
+      Validators.required,
+      Validators.minLength(POKEMON_RULES.MIN_NAME),
+      Validators.maxLength(POKEMON_RULES.MAX_NAME),
+      Validators.pattern(POKEMON_RULES.NAME_PATTERN),
+    ]),
     life: new FormControl(this.pokemon().life),
     damage: new FormControl(this.pokemon().damage),
     types: new FormArray(
-      this.pokemon().types.map((type) => new FormControl(type))
+      this.pokemon().types.map((type) => new FormControl(type)),
+      [Validators.required, Validators.maxLength(POKEMON_RULES.MAX_TYPES)]
     ),
   });
 
@@ -67,5 +75,40 @@ export class PokemonEditComponent {
 
   getPokemonColor(type: string) {
     return getPokemonColor(type);
+  }
+
+  // getter name
+  get pokemonName() {
+    return this.form.get('name') as FormControl;
+  }
+
+  // getter damage
+  get pokemonLife() {
+    return this.form.get('life') as FormControl;
+  }
+
+  incrementLife() {
+    const newValue = this.pokemonLife.value + 1;
+    this.pokemonLife.setValue(newValue);
+  }
+
+  decrementLife() {
+    const newValue = this.pokemonLife.value - 1;
+    this.pokemonLife.setValue(newValue);
+  }
+
+  // getter damage
+  get pokemonDamage() {
+    return this.form.get('damage') as FormControl;
+  }
+
+  incrementDamage() {
+    const newValue = this.pokemonDamage.value + 1;
+    this.pokemonDamage.setValue(newValue);
+  }
+
+  decrementDamage() {
+    const newValue = this.pokemonDamage.value - 1;
+    this.pokemonDamage.setValue(newValue);
   }
 }
