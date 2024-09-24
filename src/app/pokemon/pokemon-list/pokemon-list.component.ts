@@ -5,11 +5,12 @@ import { Pokemon } from '../../pokemon.model';
 import { PokemonService } from '../../pokemon.service';
 import { PokemonBorderDirective } from '../../pokemon-border.directive';
 import { RouterLink } from '@angular/router';
+import { PokemonSearchComponent } from "../pokemon-search/pokemon-search.component";
 
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
-  imports: [DatePipe, PokemonBorderDirective, RouterLink],
+  imports: [DatePipe, PokemonBorderDirective, RouterLink, PokemonSearchComponent],
   templateUrl: './pokemon-list.component.html',
   styles: [
     `

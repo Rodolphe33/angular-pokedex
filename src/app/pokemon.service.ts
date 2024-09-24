@@ -1,4 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 import { POKEMON_LIST } from './pokemon-list.fake';
 import { Pokemon, PokemonList } from './pokemon.model';
 
@@ -6,6 +9,8 @@ import { Pokemon, PokemonList } from './pokemon.model';
   providedIn: 'root',
 })
 export class PokemonService {
+  private readonly http = inject(HttpClient);
+
   // Retourne la liste de tous les Pokémons.
   getPokemonList(): PokemonList {
     return POKEMON_LIST;
@@ -35,5 +40,11 @@ export class PokemonService {
       'Fée',
       'Vol',
     ];
+  }
+
+  // Rechercher un pokémon
+  searchPokemons(term: string): Observable<PokemonList> {
+    const API_URL = '<https://api.example.com/users>';
+    return this.http.get<PokemonList>(`${API_URL}?name_like=${term}`);
   }
 }
