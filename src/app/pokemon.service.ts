@@ -10,10 +10,16 @@ import { Pokemon, PokemonList } from './pokemon.model';
 })
 export class PokemonService {
   private readonly http = inject(HttpClient);
+  private readonly POKEMON_API_URL = 'http://localhost:3000/pokemons';
 
-  // Retourne la liste de tous les Pokémons.
-  getPokemonList(): PokemonList {
-    return POKEMON_LIST;
+  // Retourne la liste de tous les Pokémons via pokemon-list.fake.ts
+  // getPokemonList(): PokemonList {
+  //   return POKEMON_LIST;
+  // }
+
+  // Retourne la liste des pokémons.
+  getPokemonList(): Observable<PokemonList> {
+    return this.http.get<PokemonList>(this.POKEMON_API_URL);
   }
 
   // Retourne le pokémon avec l'identifiant passé en paramètre.
