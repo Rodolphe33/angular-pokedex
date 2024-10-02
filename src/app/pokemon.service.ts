@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { POKEMON_LIST } from './pokemon-list.fake';
+// import { POKEMON_LIST } from './pokemon-list.fake';
 import { Pokemon, PokemonList } from './pokemon.model';
 
 @Injectable({
@@ -23,14 +23,30 @@ export class PokemonService {
   }
 
   // Retourne le pokémon avec l'identifiant passé en paramètre.
-  getPokemonById(id: number): Pokemon {
-    const pokemon = POKEMON_LIST.find((pokemon) => pokemon.id === id);
 
-    if (!pokemon) {
-      throw new Error(`No Pokémon found with id ${id}`);
-    }
+  /*
+  * Requête sur données en dur
+  * getPokemonById(id: number): Pokemon {
+  * const pokemon = POKEMON_LIST.find((pokemon) => pokemon.id === id);
+  * if (!pokemon) {
+  *   throw new Error(`No Pokémon found with id ${id}`);
+  * }
+  * return pokemon;
+  * }
+  */
 
-    return pokemon;
+  getPokemonById(id: number): Observable<Pokemon> {
+    return this.http.get<Pokemon>(`${this.POKEMON_API_URL}/${id}`);
+  }
+
+  // Met à jour un pokémon existant.
+  updatePokemon(pokemon: Pokemon): Observable<Pokemon> {
+    return this.http.put<Pokemon>(`${this.POKEMON_API_URL}/${pokemon.id}`, pokemon);
+  }
+
+  // Supprime un pokémon
+  deletePokemon(pokemonId: number): Observable<void> {
+    return this.http.delete<void>(`${this.POKEMON_API_URL}/${pokemonId}`);
   }
 
   // Retourne la liste des types valides pour un pokémon.
