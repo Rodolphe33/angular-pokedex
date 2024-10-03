@@ -49,6 +49,11 @@ export class PokemonService {
     return this.http.delete<void>(`${this.POKEMON_API_URL}/${pokemonId}`);
   }
 
+  // Ajout d'un pokémon
+  addPokemon(pokemon: Omit<Pokemon, 'id'>): Observable<Pokemon> {
+    return this.http.post<Pokemon>(this.POKEMON_API_URL, pokemon);
+  }
+
   // Retourne la liste des types valides pour un pokémon.
   getPokemonTypeList(): string[] {
     return [

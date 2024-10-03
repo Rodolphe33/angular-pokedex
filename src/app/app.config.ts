@@ -1,13 +1,15 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter, Routes } from '@angular/router';
 
+import { AuthGuard } from './core/auth/auth.guard';
+
+import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PokemonListComponent } from './pokemon/pokemon-list/pokemon-list.component';
 import { PokemonProfileComponent } from './pokemon/pokemon-profile/pokemon-profile.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PokemonEditComponent } from './pokemon/pokemon-edit/pokemon-edit.component';
-import { provideHttpClient } from '@angular/common/http';
-import { AuthGuard } from './core/auth/auth.guard';
-import { LoginComponent } from './login/login.component';
+import { PokemonAddComponent } from './pokemon/pokemon-add/pokemon-add.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +25,11 @@ export const routes: Routes = [
         path: '',
         component: PokemonListComponent,
         title: 'Pokédex',
+      },
+      {
+        path: 'add',
+        component: PokemonAddComponent,
+        title: `Ajout d'un pokémon`,
       },
       {
         path: ':id',
