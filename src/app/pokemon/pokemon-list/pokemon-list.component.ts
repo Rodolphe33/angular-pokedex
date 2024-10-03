@@ -1,12 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { DatePipe } from '@angular/common';
-
-import { Pokemon } from '../../pokemon.model';
-import { PokemonService } from '../../pokemon.service';
-import { PokemonBorderDirective } from '../../pokemon-border.directive';
-import { RouterLink } from '@angular/router';
-import { PokemonSearchComponent } from "../pokemon-search/pokemon-search.component";
 import { toSignal } from '@angular/core/rxjs-interop';
+import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+
+import { Pokemon } from '../pokemon.model';
+import { PokemonBorderDirective } from '../pokemon-border.directive';
+import { PokemonService } from '../services/pokemon.service';
+import { PokemonSearchComponent } from "../pokemon-search/pokemon-search.component";
 
 @Component({
   selector: 'app-pokemon-list',

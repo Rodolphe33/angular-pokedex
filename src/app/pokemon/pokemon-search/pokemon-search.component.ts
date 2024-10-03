@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { PokemonService } from '../../pokemon.service';
+import { PokemonService } from '../services/pokemon.service';
 import { Router } from '@angular/router';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';

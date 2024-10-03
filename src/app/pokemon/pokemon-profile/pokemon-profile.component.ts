@@ -1,8 +1,8 @@
 import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { PokemonService } from '../../pokemon.service';
+import { PokemonService } from '../services/pokemon.service';
 import { DatePipe } from '@angular/common';
-import { getPokemonColor } from '../../pokemon.model';
+import { getPokemonColor } from '../pokemon.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of } from 'rxjs';
 

@@ -9,8 +9,8 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { PokemonService } from '../../pokemon.service';
-import { getPokemonColor, Pokemon, POKEMON_RULES } from '../../pokemon.model';
+import { PokemonService } from '../services/pokemon.service';
+import { getPokemonColor, Pokemon, POKEMON_RULES } from '../pokemon.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({

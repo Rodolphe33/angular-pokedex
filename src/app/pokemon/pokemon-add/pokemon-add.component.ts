@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { getPokemonColor, Pokemon, POKEMON_RULES } from '../../pokemon.model';
-import { PokemonService } from '../../pokemon.service';
+import { getPokemonColor, Pokemon, POKEMON_RULES } from '../pokemon.model';
+import { PokemonService } from '../services/pokemon.service';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
